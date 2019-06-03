@@ -1,0 +1,28 @@
+name: "${project.artifactId}"
+main: "${project.groupId}.${project.artifactId}"
+version: "${project.version}"
+description: "${project.artifactId} Bukkit Plugin"
+author: "BillyGalbreath"
+api-version: "1.13"
+loadbefore:
+  - WorldLoader
+  - Multiverse-Core
+  - MultiWorld
+
+commands:
+  moon:
+    description: Control the MoonGenerator
+    fusage: /<command> (reload | set (helmet | rocket) | give (helmet (player) | rocket (player)))
+    usage: |-
+      §6Ex§7: §e/<command> reload §7- §3Reload the configs
+      §6Ex§7: §e/<command> set helmet §7- §3Set the helmet item
+      §6Ex§7: §e/<command> set rocket §7- §3Set the rocket item
+      §6Ex§7: §e/<command> give helmet §7- §3Give yourself a helmet
+      §6Ex§7: §e/<command> give rocket §7- §3Give yourself a rocket
+      §6Ex§7: §e/<command> give helmet player §7- §3Give someone a helmet
+      §6Ex§7: §e/<command> give rocket player §7- §3Give someone a rocket
+
+permissions:
+  command.moon:
+    description: Admin perm to contol MoonGenerator
+    default: op
