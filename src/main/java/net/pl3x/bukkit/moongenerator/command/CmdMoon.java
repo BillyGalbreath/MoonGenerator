@@ -132,11 +132,6 @@ public class CmdMoon implements TabExecutor {
         }
 
         if (args.length == 3) {
-            if (!(sender instanceof Player)) {
-                Lang.send(sender, Lang.PLAYER_COMMAND);
-                return true;
-            }
-
             if (args[0].equalsIgnoreCase("give")) {
                 Player target = Bukkit.getPlayer(args[2]);
                 if (target == null) {
