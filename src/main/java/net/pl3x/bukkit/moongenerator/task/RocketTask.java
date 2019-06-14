@@ -50,9 +50,9 @@ public class RocketTask extends BukkitRunnable {
 
             // lets go \o/
             if (Config.isMoon(player.getWorld())) {
-                teleport(Config.EARTH_WORLD, x / Config.MOON_SCALE, z / Config.MOON_SCALE, Lang.ROCKET_EARTH_SUCCESS);
+                teleport(Config.EARTH_WORLD, x * Config.MOON_SCALE, z * Config.MOON_SCALE, Lang.ROCKET_EARTH_SUCCESS);
             } else {
-                teleport(Config.MOON_WORLD, x * Config.MOON_SCALE, z * Config.MOON_SCALE, Lang.ROCKET_MOON_SUCCESS);
+                teleport(Config.MOON_WORLD, x / Config.MOON_SCALE, z / Config.MOON_SCALE, Lang.ROCKET_MOON_SUCCESS);
             }
         }
     }
