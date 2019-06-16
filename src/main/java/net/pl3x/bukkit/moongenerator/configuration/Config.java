@@ -38,6 +38,11 @@ public class Config {
     public static int OXYGEN_RADIUS = 10;
     public static boolean USE_OXYGEN_SAFE_ZONES = true;
 
+    public static String RP_MOON = "https://pl3x.net/resource_packs/Moon.zip";
+    public static String RP_MOON_HASH = "04CF2F4185D360E9644B334D8D8F40BB5F858879";
+    public static String RP_EMPTY = "https://pl3x.net/resource_packs/Empty.zip";
+    public static String RP_EMPTY_HASH = "BE986C44653397E617BADEC097870D0D4F7B3E1B";
+
     private static void init() {
         LANGUAGE_FILE = getString("language-file", LANGUAGE_FILE);
 
@@ -60,6 +65,11 @@ public class Config {
         USE_OXYGEN = getBoolean("use-oxygen", USE_OXYGEN);
         OXYGEN_RADIUS = getInt("oxygen-radius", OXYGEN_RADIUS);
         USE_OXYGEN_SAFE_ZONES = getBoolean("use-oxygen-safe-zones", USE_OXYGEN_SAFE_ZONES);
+
+        RP_MOON = getString("resource-pack.moon.url", RP_MOON);
+        RP_MOON_HASH = getString("resource-pack.moon.hash", RP_MOON_HASH);
+        RP_EMPTY = getString("resource-pack.empty.url", RP_EMPTY);
+        RP_EMPTY_HASH = getString("resource-pack.empty.hash", RP_EMPTY_HASH);
     }
 
     private static ItemStack defaultRocket() {
