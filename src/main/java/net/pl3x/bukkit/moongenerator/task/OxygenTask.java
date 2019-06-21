@@ -34,6 +34,16 @@ public class OxygenTask extends BukkitRunnable {
             return false; // creative and spectator mode players always have oxygen
         }
 
+        ItemStack helmet = player.getInventory().getHelmet();
+        if (helmet != null) {
+            if (helmet.isSimilar(Config.HELMET)) {
+                return false; // wearing helmet
+            }
+            if (Config.isGlassHelmet(helmet)) {
+                return false; // wearing glass helmet
+            }
+        }
+
         if (!Config.USE_OXYGEN_SAFE_ZONES) {
             return true; // safe zones are disabled
         }
@@ -55,20 +65,10 @@ public class OxygenTask extends BukkitRunnable {
 
     private void applyNoOxygen(Player player) {
         PotionEffect witherEffect = new PotionEffect(PotionEffectType.WITHER, 40, 1);
-        ItemStack helmet = player.getInventory().getHelmet();
-        if (helmet != null) {
-            if (!helmet.isSimilar(Config.HELMET) && !Config.isGlassHelmet(helmet)) {
-                player.addPotionEffect(witherEffect, true);
-                if (Config.USE_PARTICLES) {
-                    player.spawnParticle(Particle.DAMAGE_INDICATOR, player.getLocation().getX(), player.getLocation().getY() + 1, player.getLocation().getZ(), 15);
-                }
-                player.playSound(player.getLocation(), Sound.ENTITY_DROWNED_DEATH, 1f, 1f);
-            }
-        } else {
-            player.addPotionEffect(witherEffect, true);
-            if (Config.USE_PARTICLES) {
-                player.spawnParticle(Particle.DAMAGE_INDICATOR, player.getLocation().getX(), player.getLocation().getY() + 1, player.getLocation().getZ(), 10);
-            }
+        player.addPotionEffect(witherEffect, true);
+        if (Config.USE_PARTICLES) {
+            player.spawnParticle(Particle.DAMAGE_INDICATOR, player.getLocation().getX(), player.getLocation().getY() + 1, player.getLocation().getZ(), 10);
         }
+        player.playSound(player.getLocation(), Sound.ENTITY_DROWNED_DEATH, 1f, 1f);
     }
 }
