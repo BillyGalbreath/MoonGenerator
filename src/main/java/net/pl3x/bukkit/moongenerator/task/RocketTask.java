@@ -38,10 +38,6 @@ public class RocketTask extends BukkitRunnable {
         int y = (int) player.getLocation().getY();
         player.sendActionBar(ChatColor.DARK_GREEN + "Y: " + y);
 
-        if (rocket.getTicksLived() < ((rocket.getFireworkMeta().getPower() + 1) * 10) - 5) {
-            return; // rocket is not near explosion time yet
-        }
-
         if (y >= Config.ROCKET_HEIGHT_REQUIREMENT) {
             // success! height requirement reached
             cancel();

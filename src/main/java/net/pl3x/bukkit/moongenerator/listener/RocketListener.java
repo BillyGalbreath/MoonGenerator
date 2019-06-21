@@ -60,7 +60,7 @@ public class RocketListener implements Listener {
 
         Firework rocket = (Firework) player.getWorld().spawnEntity(player.getLocation(), EntityType.FIREWORK);
         FireworkMeta rocketMeta = rocket.getFireworkMeta();
-        rocketMeta.setPower(3);
+        rocketMeta.setPower(127);
         rocket.setFireworkMeta(rocketMeta);
 
         rocket.addPassenger(player);
