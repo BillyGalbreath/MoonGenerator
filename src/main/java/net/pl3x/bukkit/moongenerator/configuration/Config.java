@@ -1,7 +1,11 @@
 package net.pl3x.bukkit.moongenerator.configuration;
 
 import com.destroystokyo.paper.MaterialSetTag;
+import com.destroystokyo.paper.profile.CraftPlayerProfile;
+import com.destroystokyo.paper.profile.PlayerProfile;
+import com.destroystokyo.paper.profile.ProfileProperty;
 import com.google.common.base.Throwables;
+import com.mojang.authlib.GameProfile;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.World;
@@ -9,11 +13,13 @@ import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.plugin.Plugin;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
+import java.util.UUID;
 import java.util.logging.Level;
 
 public class Config {
@@ -75,7 +81,7 @@ public class Config {
     private static ItemStack defaultRocket() {
         ItemStack rocket = new ItemStack(Material.FIREWORK_ROCKET);
         ItemMeta meta = rocket.getItemMeta();
-        meta.setDisplayName("NASA Rocket");
+        meta.setDisplayName("Moon Rocket");
         meta.setLore(Collections.singletonList("Space exploration"));
         rocket.setItemMeta(meta);
         return rocket;
@@ -83,9 +89,12 @@ public class Config {
 
     private static ItemStack defaultHelmet() {
         ItemStack helmet = new ItemStack(Material.PLAYER_HEAD);
-        ItemMeta meta = helmet.getItemMeta();
-        meta.setDisplayName("NASA Helmet");
+        SkullMeta meta = (SkullMeta) helmet.getItemMeta();
+        meta.setDisplayName("Moon Helmet");
         meta.setLore(Collections.singletonList("Space exploration"));
+        PlayerProfile profile = CraftPlayerProfile.asBukkitMirror(new GameProfile(UUID.fromString("167a4b6d-9fe4-4687-8993-5cec916c6be9"), "Moon Helmet"));
+        profile.setProperty(new ProfileProperty("textures", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOGRkMDhiZjM4YmQxYjIzM2U1ZDRkYzVkY2FhMDQ0YzI2NzI0NDU3NzU0MjIxZjUwM2ZkYmE1MThlNGIyNWE5ZSJ9fX0="));
+        meta.setPlayerProfile(profile);
         helmet.setItemMeta(meta);
         return helmet;
     }

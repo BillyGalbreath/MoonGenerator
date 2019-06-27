@@ -1,16 +1,22 @@
 package net.pl3x.bukkit.moongenerator.listener;
 
 import net.pl3x.bukkit.moongenerator.configuration.Config;
+import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.block.Block;
+import org.bukkit.block.Skull;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.inventory.meta.SkullMeta;
 
 public class HelmetListener implements Listener {
     private static final int HELMET_SLOT_ID = 5;
@@ -73,5 +79,23 @@ public class HelmetListener implements Listener {
 
             event.setCancelled(true);
         }
+    }
+
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
+    public void onBlockBreak(BlockBreakEvent event) {
+        Block block = event.getBlock();
+        if (block.getType() != Material.PLAYER_HEAD) {
+            return;
+        }
+        Skull skull = (Skull) block.getState();
+        OfflinePlayer owner = skull.getOwningPlayer();
+        if (owner == null) {
+            return; // no owner set
+        }
+        if (!owner.equals(((SkullMeta) Config.HELMET.getItemMeta()).getOwningPlayer())) {
+            return; // not our moon helmet
+        }
+        event.setDropItems(false);
+        block.getWorld().dropItemNaturally(block.getLocation(), Config.HELMET);
     }
 }
