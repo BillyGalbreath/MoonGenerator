@@ -5,10 +5,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 
 public class HelmetListener implements Listener {
     private static final int HELMET_SLOT_ID = 5;
@@ -39,6 +41,36 @@ public class HelmetListener implements Listener {
             // swap items (slot <-> cursor)
             ((Player) holder).getInventory().setHelmet(newHelmet);
             event.getWhoClicked().setItemOnCursor(oldHelmet);
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
+    public void onInventoryShiftClick(InventoryClickEvent event) {
+        if (event.getAction() != InventoryAction.MOVE_TO_OTHER_INVENTORY) {
+            return; // not moving item around by shift clicking
+        }
+
+        if (event.getSlotType() == InventoryType.SlotType.ARMOR) {
+            return; // don't care if shift clicking out of the armor slot
+        }
+
+        ItemStack newHelmet = event.getCurrentItem();
+        if (!Config.isGlassHelmet(newHelmet)) {
+            return; // not glass helmet
+        }
+
+        InventoryHolder holder = event.getInventory().getHolder();
+        if (holder instanceof Player) {
+            PlayerInventory pInv = ((Player) holder).getInventory();
+
+            if (pInv.getHelmet() != null) {
+                return; // already wearing a helmet
+            }
+
+            pInv.setHelmet(newHelmet.clone());
+            pInv.setItem(event.getSlot(), null);
+
             event.setCancelled(true);
         }
     }
