@@ -96,7 +96,7 @@ public class Config {
      * Reload the configuration file
      */
     public static void reload(Plugin plugin) {
-        GLASS_BLOCKS = new MaterialSetTag(new NamespacedKey(plugin, "glass_blocks")).endsWith("_GLASS");
+        GLASS_BLOCKS = new MaterialSetTag(new NamespacedKey(plugin, "glass_blocks")).endsWith("_GLASS").add(Material.GLASS);
 
         //plugin.saveDefaultConfig();
         configFile = new File(plugin.getDataFolder(), "config.yml");
@@ -154,7 +154,7 @@ public class Config {
     private static MaterialSetTag GLASS_BLOCKS;
 
     public static boolean isGlassHelmet(ItemStack itemStack) {
-        return itemStack != null && (USE_GLASS_HELMETS && GLASS_BLOCKS.isTagged(itemStack));
+        return itemStack != null && GLASS_BLOCKS.isTagged(itemStack);
     }
 
     public static boolean isEarth(World world) {
